@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const createFile = (base, path) => {
+const createFile = (base, limit, path) => {
   return new Promise((resolve, reject) => {
     if (!Number(base)) {
       reject(`El valor introducido base : '${base}' no es un número`);
@@ -9,7 +9,7 @@ const createFile = (base, path) => {
 
     let data = "";
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= limit; i++) {
       data += `${base} * ${i} = ${base * i}\n`;
     }
 
@@ -22,6 +22,13 @@ const createFile = (base, path) => {
   });
 };
 
+const listTable = (base, limit = 10) => {
+  for (let i = 1; i <= limit; i++) {
+    console.log(`${base} * ${i} = ${base * i}`);
+  }
+}
+
 module.exports = {
   createFile,
+  listTable
 };
