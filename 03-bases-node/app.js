@@ -1,4 +1,5 @@
 const { argv } = require('./config/yargs');
+const colors = require('colors');
 const { createFile, listTable } = require('./multiplication/multiplication');
 
 let command = argv._[0];
@@ -12,10 +13,10 @@ switch (command) {
     break;
   case 'create':
     createFile(base, limit, path)
-      .then((file) => console.log(`Archivo creado : ${file}`))
-      .catch((err) => console.log(`ERROR : ${err}`));
+      .then((file) => console.log('Archivo creado : ' + `${file}`.blue))
+      .catch((err) => console.log(`ERROR : ${err}`.red));
     break;
   default:
-    console.log('Command not recognized');
+    console.log('Command not recognized'.cyan);
     break;
 }
