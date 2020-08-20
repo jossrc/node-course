@@ -1,36 +1,9 @@
-const argv = require('yargs')
-  .command('list', 'Imprime en consola la tabla de multiplicar', {
-    base: {
-      demand: true,
-      default: 1,
-      alias: 'b',
-      describe: 'Indica la base del número a multiplicar',
-    },
-    limit: {
-      default: 10,
-      alias: 'l',
-      describe: 'Indica el límite de la tabla',
-    },
-  })
-  .command('create', 'Crea un archivo .txt con la tabla de multiplicar', {
-    base: {
-      demand: true,
-      alias: 'b',
-      describe: 'Indica la base del número a multiplicar',
-    },
-    limit: {
-      default: 10,
-      alias: 'l',
-      describe: 'Indica el límite de la tabla',
-    }
-  })
-  .help().argv;
-
+const { argv } = require('./config/yargs');
 const { createFile, listTable } = require('./multiplication/multiplication');
 
-let command = argv._[0]; // Devuelve el comando escrito en consola
-let base = argv.base; // Obtenemos el flag "base" del comando
-let limit = argv.limit; // Obtenemos el flag "limit" del comando
+let command = argv._[0];
+let base = argv.base;
+let limit = argv.limit;
 let path = `tables/mult-${base}.txt`;
 
 switch (command) {
