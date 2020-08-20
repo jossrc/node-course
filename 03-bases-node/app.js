@@ -1,19 +1,8 @@
-const fs = require("fs");
+const {createFile: createMultiplicationFile} = require('./multiplication/multiplication');
 
-let base = 3;
+let base = 5;
+let path = `tables/mult-${base}.txt`;
 
-const createMultiplicationTable = () => {
-  let data = '';
-  for (let i = 1; i <= 10; i++) {
-    let result = base * i;
-    data += `${base} * ${i} = ${result}\n`;
-  }
-  return data;
-};
-
-const path = `tables/mult-${base}.txt`;
-
-fs.writeFile(path, createMultiplicationTable(), (err) => {
-  if (err) throw err;
-  console.log(`El archivo mult-${base}.txt a sido creado`);
-});
+createMultiplicationFile(base, path)
+  .then( file => console.log(`Archivo creado : ${file}`) )
+  .catch( err => console.log(`ERROR : ${err}`))
