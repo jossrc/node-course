@@ -1,20 +1,31 @@
-const {createFile} = require('./multiplication/multiplication');
+const argv = require('yargs').command(
+  'listar',
+  'Impreme en consola la tabla de multiplicar',
+  {
+    base: {
+      demand: true,
+      alias: 'b',
+    },
+    limite: {
+      default: 10,
+      alias: 'l',
+    },
+  }
+).help().argv;
 
-// proccess -> Pertenece a Node
-// console.log(process);
+const { createFile } = require('./multiplication/multiplication');
 
-// proccess.argv -> Obtiene las variables que se pasan por la terminal
-// console.log(process.argv);
 
-let argv = process.argv;
-let parameters = argv[2];
-let base = parameters.split('=')[1];
+let argv2 = process.argv;
 
-let path = `tables/mult-${base}.txt`;
+console.log('Process yargs  : ', argv);
+// console.log('Process nativo : ', argv2);
 
-// Trabajar con parámetros por la terminal es un dolor de cabeza 
-// Por lo que se recomienda usar "yargs"
+console.log('Base   : ', argv.base);
+console.log('Limite : ', argv.limite);
+// let path = `tables/mult-${base}.txt`;
 
-createFile(base, path)
-  .then( file => console.log(`Archivo creado : ${file}`) )
-  .catch( err => console.log(`ERROR : ${err}`))
+
+// createFile(base, path)
+//   .then( file => console.log(`Archivo creado : ${file}`) )
+//   .catch( err => console.log(`ERROR : ${err}`))
