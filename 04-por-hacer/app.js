@@ -1,4 +1,4 @@
-const argv = require('yargs').help().argv;
+const { argv } = require('./config/yargs');
 
 console.log(argv);
 
@@ -6,7 +6,7 @@ let command = argv._[0];
 
 switch (command) {
   case 'create':
-    console.log('Crear una tarea pendiente');
+    console.log('Crea una tarea pendiente');
     break;
   case 'list':
     console.log('Mostrar todas las tareas por hacer');
