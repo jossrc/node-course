@@ -11,7 +11,7 @@ switch (command) {
     console.log(task);
     break;
   case 'list':
-    console.log('Mostrar todas las tareas por hacer');
+    todo.printTodoList();
     break;
   case 'update':
     console.log('Actualizar una tarea por hacer');

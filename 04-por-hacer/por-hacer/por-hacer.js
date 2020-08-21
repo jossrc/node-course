@@ -1,4 +1,5 @@
 const fs = require('fs');
+const colors = require('colors');
 
 let todoList = [];
 
@@ -33,6 +34,23 @@ const create = (description) => {
   return todo;
 };
 
+const printTodoList = () => {
+  loadDB();
+  console.log('======== Por Hacer ========'.green);
+  for (const task of todoList) {
+    console.log('Tarea  : ', task.description);
+    console.log('Estado : ', task.isCompleted);
+    console.log('==========================='.green);    
+  }
+}
+
+const getTodoList = () => {
+  loadDB();
+  return todoList;
+}
+
 module.exports = {
   create,
+  printTodoList,
+  getTodoList
 };
