@@ -20,6 +20,7 @@ const argv = require('yargs')
     ...description,
     ...completed,
   })
+  .command('delete', 'Elimina una tarea pendiente', description)
   .help().argv;
 
 module.exports = {

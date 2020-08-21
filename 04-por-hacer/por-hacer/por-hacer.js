@@ -63,9 +63,25 @@ const update = (description, completed = true) => {
   return false;
 };
 
+const remove = (description) => {
+  loadDB();
+
+  let newList = todoList.filter( task =>  task.description !== description );
+
+  if (newList.length !== todoList.length) {
+    todoList = newList;
+    saveDB();
+    return true;
+  }
+  
+  return false;
+
+}
+
 module.exports = {
   create,
   printTodoList,
   getTodoList,
-  update
+  update,
+  remove
 };

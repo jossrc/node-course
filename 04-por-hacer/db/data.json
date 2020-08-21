@@ -1,9 +1,4 @@
 [
   { "description": "Pasear al perro", "isCompleted": false },
-  { "description": "Salir de compras", "isCompleted": false },
-  { "description": "Comer Otii", "isCompleted": "true" },
-  { "description": "Comer Otii", "isCompleted": false },
-  { "description": "Comer Otii", "isCompleted": false },
-  { "description": "Comer Otii", "isCompleted": false },
-  { "description": "Comer Otii", "isCompleted": false }
+  { "description": "Salir de compras", "isCompleted": false }
 ]

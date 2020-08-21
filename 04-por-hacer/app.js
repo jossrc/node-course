@@ -17,6 +17,10 @@ switch (command) {
     let updated = todo.update(argv.description, argv.completed);
     console.log(updated);
     break;
+  case 'delete':
+    let isDeleted = todo.remove(argv.description);
+    console.log(isDeleted);
+    break;
   default:
     console.log('Command not recognized');
     break;
