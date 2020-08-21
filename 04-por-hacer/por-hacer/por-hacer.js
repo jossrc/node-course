@@ -40,17 +40,32 @@ const printTodoList = () => {
   for (const task of todoList) {
     console.log('Tarea  : ', task.description);
     console.log('Estado : ', task.isCompleted);
-    console.log('==========================='.green);    
+    console.log('==========================='.green);
   }
-}
+};
 
 const getTodoList = () => {
   loadDB();
   return todoList;
-}
+};
+
+const update = (description, completed = true) => {
+  loadDB();
+
+  let index = todoList.findIndex((task) => task.description === description);
+
+  if (index >= 0) {
+    todoList[index].isCompleted = completed;
+    saveDB();
+    return true;
+  }
+
+  return false;
+};
 
 module.exports = {
   create,
   printTodoList,
-  getTodoList
+  getTodoList,
+  update
 };

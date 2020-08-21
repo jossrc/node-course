@@ -14,7 +14,8 @@ switch (command) {
     todo.printTodoList();
     break;
   case 'update':
-    console.log('Actualizar una tarea por hacer');
+    let updated = todo.update(argv.description, argv.completed);
+    console.log(updated);
     break;
   default:
     console.log('Command not recognized');
