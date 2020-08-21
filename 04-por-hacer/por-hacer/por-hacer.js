@@ -34,13 +34,35 @@ const create = (description) => {
   return todo;
 };
 
-const printTodoList = () => {
-  loadDB();
-  console.log('======== Por Hacer ========'.green);
+const forList = (todoList) => {
   for (const task of todoList) {
     console.log('Tarea  : ', task.description);
     console.log('Estado : ', task.isCompleted);
     console.log('==========================='.green);
+  }
+};
+
+const printTodoList = (all, completed = true) => {
+  loadDB();
+
+  if (all === 'yes') {
+    console.log('======== Tareas ========'.green);
+    forList(todoList);
+    return;
+  }
+
+  if (completed) {
+    let completedTasks = todoList.filter(
+      (task) => task.isCompleted == completed
+    );
+    console.log('======== Tareas Completadas ========'.green);
+    forList(completedTasks);
+  } else {
+    let incompleteTasks = todoList.filter(
+      (task) => task.isCompleted == completed
+    );
+    console.log('======== Tareas Incompletas ========'.green);
+    forList(incompleteTasks);
   }
 };
 
@@ -66,22 +88,21 @@ const update = (description, completed = true) => {
 const remove = (description) => {
   loadDB();
 
-  let newList = todoList.filter( task =>  task.description !== description );
+  let newList = todoList.filter((task) => task.description !== description);
 
   if (newList.length !== todoList.length) {
     todoList = newList;
     saveDB();
     return true;
   }
-  
-  return false;
 
-}
+  return false;
+};
 
 module.exports = {
   create,
   printTodoList,
   getTodoList,
   update,
-  remove
+  remove,
 };

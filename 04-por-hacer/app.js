@@ -11,7 +11,7 @@ switch (command) {
     console.log(task);
     break;
   case 'list':
-    todo.printTodoList();
+    todo.printTodoList(argv.all, argv.completed);
     break;
   case 'update':
     let updated = todo.update(argv.description, argv.completed);

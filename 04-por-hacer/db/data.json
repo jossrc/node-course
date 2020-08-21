@@ -1,4 +1,1 @@
-[
-  { "description": "Pasear al perro", "isCompleted": false },
-  { "description": "Salir de compras", "isCompleted": false }
-]
+[{"description":"Pasear al perro","isCompleted":false},{"description":"Salir de compras","isCompleted":false},{"description":"Estudiar Node","isCompleted":true}]
