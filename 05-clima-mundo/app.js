@@ -1,3 +1,5 @@
+const place = require('./place/place');
+
 // Permite crear flags sin necesidad de comandos solo con node app
 const argv = require('yargs').options({
   address: {
@@ -7,4 +9,4 @@ const argv = require('yargs').options({
   },
 }).argv;
 
-console.log(argv.address);
+place.getLatLng(argv.address).then(console.log);
