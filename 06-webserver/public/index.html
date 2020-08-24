@@ -5,15 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Aplicación desarrollada con Express" />
     <meta name="keywords" content="HTML,Javascript,Node,Express" />
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>WebServer</title>
   </head>
   <body>
-    <h1>Hola Mundo</h1>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta illum
-      cumque assumenda eius culpa distinctio porro harum officiis eaque sint
-      necessitatibus itaque quisquam eum maxime aut esse, temporibus libero
-      quibusdam!
-    </p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">🚀Joss🌟</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blog</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link"
+              href="#"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" tabindex="-1" aria-disabled="true"
+              >About me</a
+            >
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="jumbotron">
+      <h1 class="display-4">App Server</h1>
+      <p class="lead">
+        Un pequeño proyecto trabajado con Express para el manejo de servicios
+      </p>
+      <hr class="my-4" />
+      <p>
+        Si quieren seguir aprendiendo pueden tomar el curso de Node de Fernando
+        Herrera
+      </p>
+      <a
+        class="btn btn-primary btn-lg"
+        href="https://www.udemy.com/course/node-de-cero-a-experto/"
+        role="button"
+        target="_blank"
+        >Más información</a
+      >
+    </div>
+
+    <footer>
+      José Robles - 2020
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/bootstrap.min.js"></script>
   </body>
 </html>

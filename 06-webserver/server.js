@@ -2,15 +2,16 @@ const express = require('express');
 const app = express(); // Permite usar express como queramos
 
 // Middleware
+// Al estar en publico todos podran tener acceso a su contenido
 app.use(express.static(__dirname+'/public'));
 
 // Por defecto muestra siempre el index.html
-// En caso de tener un Home este debera estar escrito con su formato "/home.html"
+// En caso de tener un About este debera estar escrito con su formato "/about.html"
 
 // La petición se hará cuando sea de tipo GET en "/"
-app.get('/', (req, res) => {
-  res.send('Hello World');
-}); 
+// app.get('/', (req, res) => {
+//   res.send('Hello World');
+// }); 
 // Debemos tener cuidado con este ya que se combina con el contenido publico
 
 
