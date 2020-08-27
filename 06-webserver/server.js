@@ -9,7 +9,10 @@ app.use(express.static(__dirname+'/public'));
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {
+    name: 'José Robles',
+    year: new Date().getFullYear()
+  });
 })
 
 app.listen(3000, ()=> {
