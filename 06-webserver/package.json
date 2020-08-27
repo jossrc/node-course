@@ -4,6 +4,8 @@
   "description": "Aplicación web",
   "main": "app.js",
   "scripts": {
+    "start": "node server.js",
+    "nodemon": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "JOSE",
