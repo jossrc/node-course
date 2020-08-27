@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const hbs = require('hbs');
+require('./hbs/helpers');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -18,9 +19,9 @@ app.get('/', (req, res) => {
 
 app.get('/about', (req, res) => {
   res.render('about', {
-    name: 'José Robles'
-  })
-})
+    name: 'José Robles',
+  });
+});
 
 app.listen(3000, () => {
   console.log('Escuchando peticiones en el puerto 3000');
