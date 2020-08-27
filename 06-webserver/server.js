@@ -5,6 +5,9 @@ const app = express(); // Permite usar express como queramos
 // Al estar en publico todos podran tener acceso a su contenido
 app.use(express.static(__dirname+'/public'));
 
+// Express HBS engine
+app.set('view engine', 'hbs');
+
 // Por defecto muestra siempre el index.html
 // En caso de tener un About este debera estar escrito con su formato "/about.html"
 
