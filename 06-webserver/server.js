@@ -1,20 +1,27 @@
 const express = require('express');
-const app = express(); // Permite usar express como queramos
+const app = express();
 
-// Middleware
-// Al estar en publico todos podran tener acceso a su contenido
-app.use(express.static(__dirname+'/public'));
+const hbs = require('hbs');
+
+app.use(express.static(__dirname + '/public'));
 
 // Express HBS engine
+hbs.registerPartials(__dirname + '/views/partials/');
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
   res.render('home', {
     name: 'José Robles',
-    year: new Date().getFullYear()
+    year: new Date().getFullYear(),
   });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    name: 'José Robles'
+  })
 })
 
-app.listen(3000, ()=> {
-    console.log('Escuchando peticiones en el puerto 3000');
+app.listen(3000, () => {
+  console.log('Escuchando peticiones en el puerto 3000');
 });
