@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Para procesar peticiones x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended:false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Para procesar peticiones json
 app.use(bodyParser.json());
@@ -16,8 +16,14 @@ app.get('/user', (req, res) => {
 app.post('/user/:id', (req, res) => {
   let body = req.body;
 
-  res.json({body});
-
+  if (body.name === undefined) {
+    res.status(400).json({
+      ok: false,
+      message: 'El nombre es necesario',
+    });
+  } else {
+    res.json({ body });
+  }
 });
 
 app.put('/user', (req, res) => {
