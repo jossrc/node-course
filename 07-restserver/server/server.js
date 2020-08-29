@@ -20,6 +20,7 @@ const uri = `mongodb+srv://${username}:${password}@cluster0.lldbo.mongodb.net/${
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useCreateIndex', true);
 
 mongoose.connect(uri, (err, res) => {
   if (err) {
