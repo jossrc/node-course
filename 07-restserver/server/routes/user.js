@@ -39,19 +39,24 @@ app.put('/user/:id', (req, res) => {
   let { id } = req.params;
   let { body } = req;
 
-  User.findByIdAndUpdate(id, body, { new: true } , (err, userDB) => {
-    if (err) {
-      return res.status(400).json({
-        ok: false,
-        err,
+  User.findByIdAndUpdate(
+    id,
+    body,
+    { new: true, runValidators: true },
+    (err, userDB) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+
+      res.json({
+        ok: true,
+        user: userDB,
       });
     }
-
-    res.json({
-      ok: true,
-      user: userDB,
-    });
-  });
+  );
 });
 
 app.delete('/user', (req, res) => {
