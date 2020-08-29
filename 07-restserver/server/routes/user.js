@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 
 const bcrypt = require('bcrypt');
+const _ = require('underscore');
+
 const User = require('../models/user');
 
 app.get('/user', (req, res) => {
@@ -37,7 +39,7 @@ app.post('/user', (req, res) => {
 
 app.put('/user/:id', (req, res) => {
   let { id } = req.params;
-  let { body } = req;
+  let body  = _.pick(req.body, ['name', 'email', 'img', 'role','state']);
 
   User.findByIdAndUpdate(
     id,
