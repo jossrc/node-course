@@ -1,24 +1,37 @@
 const express = require('express');
 const app = express();
+const User = require('../models/user');
 
 app.get('/user', (req, res) => {
   res.json('getUser');
 });
 
-app.post('/user/:id', (req, res) => {
-  let body = req.body;
+app.post('/user', (req, res) => {
+  let { name, email, password, role } = req.body;
 
-  if (body.name === undefined) {
-    res.status(400).json({
-      ok: false,
-      message: 'El nombre es necesario',
+  let newUser = new User({
+    name,
+    email,
+    password,
+    role,
+  });
+
+  newUser.save((err, userDB) => {
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    }
+
+    res.json({
+      ok: true,
+      user: userDB,
     });
-  } else {
-    res.json({ body });
-  }
+  });
 });
 
-app.put('/user', (req, res) => {
+app.put('/user/:id', (req, res) => {
   res.json('putUser');
 });
 
