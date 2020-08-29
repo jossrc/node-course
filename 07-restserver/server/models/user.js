@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 let allowedRoles = {
-    values: ['ADMIN_ROLE','USER_ROLE'],
-    message: '{VALUE} no es un rol válido'
-}
-
+  values: ['ADMIN_ROLE', 'USER_ROLE'],
+  message: '{VALUE} no es un rol válido',
+};
 
 let Schema = mongoose.Schema;
 
@@ -30,7 +29,7 @@ let userSchema = new Schema({
   role: {
     type: String,
     default: 'USER_ROLE',
-    enum: allowedRoles
+    enum: allowedRoles,
   },
   state: {
     type: Boolean,
@@ -41,6 +40,15 @@ let userSchema = new Schema({
     default: false,
   },
 });
+
+// Permite eliminar el password y solo ingresa el encriptado
+userSchema.methods.toJSON = function () {
+  let user = this;
+  let userObject = user.toObject();
+  delete userObject.password;
+
+  return userObject;
+};
 
 userSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser único' });
 

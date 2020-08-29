@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 app.get('/user', (req, res) => {
@@ -12,7 +14,7 @@ app.post('/user', (req, res) => {
   let newUser = new User({
     name,
     email,
-    password,
+    password: bcrypt.hashSync(password, 10),
     role,
   });
 
@@ -28,6 +30,8 @@ app.post('/user', (req, res) => {
       ok: true,
       user: userDB,
     });
+
+    console.log('Nuevo usuario agregado');
   });
 });
 
