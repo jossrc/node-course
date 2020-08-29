@@ -12,30 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Para procesar peticiones json
 app.use(bodyParser.json());
 
-app.get('/user', (req, res) => {
-  res.json('getUser');
-});
-
-app.post('/user/:id', (req, res) => {
-  let body = req.body;
-
-  if (body.name === undefined) {
-    res.status(400).json({
-      ok: false,
-      message: 'El nombre es necesario',
-    });
-  } else {
-    res.json({ body });
-  }
-});
-
-app.put('/user', (req, res) => {
-  res.json('putUser');
-});
-
-app.delete('/user', (req, res) => {
-  res.json('deleteUser');
-});
+// Utilizando la ruta user
+app.use(require('./routes/user'));
 
 
 const uri = `mongodb+srv://${username}:${password}@cluster0.lldbo.mongodb.net/${dbName}?retryWrites=true&w=majority`;
@@ -49,10 +27,7 @@ mongoose.connect(uri, (err, res) => {
   }
 
   console.log('Conexión a la base de datos exitosa');
-
 });
-
-
 
 app.listen(process.env.PORT, () => {
   console.log(`Conectado en el Port ${process.env.PORT}`);
