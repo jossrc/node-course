@@ -15,7 +15,7 @@ app.get('/user', (req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
 
-  User.find({}).skip(since).limit(limit).exec( (err, users) => {
+  User.find({}, 'name email role state google img').skip(since).limit(limit).exec( (err, users) => {
     if (err) {
       return res.status(400).json({
         ok: false,
