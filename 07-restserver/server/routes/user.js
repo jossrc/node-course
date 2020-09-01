@@ -13,14 +13,14 @@ app.get('/user', (req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
 
-  User.find({}, 'name email role state google img').skip(since).limit(limit).exec( (err, users) => {
+  User.find({ state: true }, 'name email role state google img').skip(since).limit(limit).exec( (err, users) => {
     if (err) {
       return res.status(400).json({
         ok: false,
         err,
       });
     }
-    User.count({}, (err, counter) => {
+    User.count({state: true}, (err, counter) => {
       res.json({
         ok: true,
         users,
@@ -84,28 +84,28 @@ app.put('/user/:id', (req, res) => {
 app.delete('/user/:id', (req, res) => {
   // res.json('deleteUser');
   let { id } = req.params;
-  User.findByIdAndRemove(id, (err, userDeleted) => {
-    if (err) {
-      return res.status(400).json({
-        ok: false,
-        err,
+    User.findByIdAndUpdate(id, {state: false}, {new: true},(err, userDeleted) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+
+      if (!userDeleted) {
+        return res.status(400).json({
+          ok: false,
+          err: {
+            message: 'Usuario no encontrado'
+          }
+        })
+      }
+
+      res.json({
+        ok: true,
+        user: userDeleted
       });
-    }
-
-    if (!userDeleted) {
-      return res.status(400).json({
-        ok: false,
-        err: {
-          message: 'Usuario no encontrado'
-        }
-      })
-    }
-
-    res.json({
-      ok: true,
-      user: userDeleted
-    });
-  })
+    })
 });
 
 module.exports = app;
