@@ -7,8 +7,6 @@ const _ = require('underscore');
 const User = require('../models/user');
 
 app.get('/user', (req, res) => {
-  // res.json('getUser');
-  // Usando parámetros opcionales
   let since = req.query.since || 0;
   since = Number(since);
 
@@ -83,8 +81,31 @@ app.put('/user/:id', (req, res) => {
   );
 });
 
-app.delete('/user', (req, res) => {
-  res.json('deleteUser');
+app.delete('/user/:id', (req, res) => {
+  // res.json('deleteUser');
+  let { id } = req.params;
+  User.findByIdAndRemove(id, (err, userDeleted) => {
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    }
+
+    if (!userDeleted) {
+      return res.status(400).json({
+        ok: false,
+        err: {
+          message: 'Usuario no encontrado'
+        }
+      })
+    }
+
+    res.json({
+      ok: true,
+      user: userDeleted
+    });
+  })
 });
 
 module.exports = app;
