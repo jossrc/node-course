@@ -7,7 +7,26 @@ const _ = require('underscore');
 const User = require('../models/user');
 
 app.get('/user', (req, res) => {
-  res.json('getUser');
+  // res.json('getUser');
+  // Usando parámetros opcionales
+  let since = req.query.since || 0;
+  since = Number(since);
+
+  let limit = req.query.limit || 5;
+  limit = Number(limit);
+
+  User.find({}).skip(since).limit(limit).exec( (err, users) => {
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    }
+    res.json({
+      ok: true,
+      users
+    })
+  })
 });
 
 app.post('/user', (req, res) => {
