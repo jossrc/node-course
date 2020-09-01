@@ -15,14 +15,9 @@ app.use(bodyParser.json());
 // Utilizando la ruta user
 app.use(require('./routes/user'));
 
-
-const uri = `mongodb+srv://${username}:${password}@cluster0.lldbo.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect(uri, (err, res) => {
+mongoose.connect(process.env.URLDB,{ useNewUrlParser: true, useUnifiedTopology: true } , (err, res) => {
   if (err) {
     throw err;
   }
