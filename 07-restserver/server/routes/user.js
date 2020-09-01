@@ -22,9 +22,12 @@ app.get('/user', (req, res) => {
         err,
       });
     }
-    res.json({
-      ok: true,
-      users
+    User.count({}, (err, counter) => {
+      res.json({
+        ok: true,
+        users,
+        quantity: counter
+      })
     })
   })
 });
