@@ -8,6 +8,13 @@ const User = require('../models/user');
 const { verifyToken } = require('../middlewares/authentication');
 
 app.get('/user', verifyToken , (req, res) => {
+
+  return res.json({
+    user: req.user,
+    name: req.user.name,
+    email: req.user.email
+  })
+
   let since = req.query.since || 0;
   since = Number(since);
 
@@ -24,7 +31,7 @@ app.get('/user', verifyToken , (req, res) => {
           err,
         });
       }
-      User.count({ state: true }, (err, counter) => {
+      User.coucount({ state: true }, (err, counter) => {
         res.json({
           ok: true,
           users,
@@ -34,7 +41,7 @@ app.get('/user', verifyToken , (req, res) => {
     });
 });
 
-app.post('/user', (req, res) => {
+app.post('/user', verifyToken, (req, res) => {
   let { name, email, password, role } = req.body;
 
   let newUser = new User({
@@ -61,7 +68,7 @@ app.post('/user', (req, res) => {
   });
 });
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', verifyToken , (req, res) => {
   let { id } = req.params;
   let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'state']);
 
@@ -85,7 +92,7 @@ app.put('/user/:id', (req, res) => {
   );
 });
 
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', verifyToken, (req, res) => {
   // res.json('deleteUser');
   let { id } = req.params;
   User.findByIdAndUpdate(
