@@ -5,8 +5,9 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 const User = require('../models/user');
+const { verifyToken } = require('../middlewares/authentication');
 
-app.get('/user', (req, res) => {
+app.get('/user', verifyToken , (req, res) => {
   let since = req.query.since || 0;
   since = Number(since);
 
