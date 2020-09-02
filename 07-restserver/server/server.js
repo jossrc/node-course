@@ -12,18 +12,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Para procesar peticiones json
 app.use(bodyParser.json());
 
-// Utilizando la ruta user
-app.use(require('./routes/user'));
+// Configuración global de rutas
+app.use(require('./routes/index'));
 
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect(process.env.URLDB,{ useNewUrlParser: true, useUnifiedTopology: true } , (err, res) => {
-  if (err) {
-    throw err;
-  }
+mongoose.connect(
+  process.env.URLDB,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, res) => {
+    if (err) {
+      throw err;
+    }
 
-  console.log('Conexión a la base de datos exitosa');
-});
+    console.log('Conexión a la base de datos exitosa');
+  }
+);
 
 app.listen(process.env.PORT, () => {
   console.log(`Conectado en el Port ${process.env.PORT}`);
