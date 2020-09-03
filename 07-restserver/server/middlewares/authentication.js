@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({
         ok: false,
         err: {
-            message: 'Token no válido'
+          message: 'Token no válido',
         },
       });
     }
@@ -20,9 +20,29 @@ const verifyToken = (req, res, next) => {
     req.user = decoded.user;
     next();
   });
+};
 
+// ====================
+// Verificar AdminRole
+// ====================
+
+const verifyAdminRole = (req, res, next) => {
+  let user = req.user;
+
+  if (user.role === 'ADMIN_ROLE') {
+    next();
+    return true;
+  }
+
+  return res.json({
+    ok: false,
+    err: {
+      message: 'El usuario no es administrador',
+    },
+  });
 };
 
 module.exports = {
   verifyToken,
+  verifyAdminRole,
 };
