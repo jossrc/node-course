@@ -25,6 +25,8 @@
 
         let id_token = googleUser.getAuthResponse().id_token;
 
+        console.log(id_token);
+
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/google');
         xhr.setRequestHeader(
