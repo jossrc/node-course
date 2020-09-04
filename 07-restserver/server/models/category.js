@@ -10,6 +10,7 @@ const categorySchema = new Schema({
   },
   state: {
     type: Boolean,
+    default: true,
     required: false,
   },
 });
