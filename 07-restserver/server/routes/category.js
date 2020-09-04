@@ -28,6 +28,22 @@ app.get('/category', verifyToken, (req, res) => {
 
 // Mostrar una categoría por ID
 app.get('/category/:id', (req, res) => {
+  const { id } = req.params;
+
+  Category.findById(id, (err, catg) => {
+    if (err) {
+      return res.json({
+        ok: false,
+        err,
+      });
+    }
+
+    res.json({
+      ok: true,
+      category: catg,
+    });
+  });
+
   // Category.findById()
 });
 
