@@ -4,10 +4,14 @@ const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
-  name: {
+  description: {
     type: String,
     unique: true,
-    required: [true, 'El nombre es obligatorio'],
+    required: [true, 'La descripción es obligatoria'],
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   state: {
     type: Boolean,

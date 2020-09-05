@@ -44,14 +44,23 @@ app.get('/category/:id', verifyToken, (req, res) => {
 });
 
 app.post('/category', verifyToken, (req, res) => {
-  const { name } = req.body;
+  const { description } = req.body;
+  const id = req.user._id;
 
   const newCategory = new Category({
-    name,
+    description,
+    user: id,
   });
 
   newCategory.save((err, category) => {
     if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
+      });
+    }
+
+    if (!category) {
       return res.status(400).json({
         ok: false,
         err,
