@@ -102,6 +102,36 @@ app.put('/category/:id', verifyToken, (req, res) => {
 app.delete('/category/:id', [verifyToken, verifyAdminRole], (req, res) => {
   // Solo un administrador puede borrar categorias
   // token
+
+  let { id } = req.params;
+
+  Category.findByIdAndUpdate(
+    id,
+    { state: false },
+    { new: true, runValidators: true },
+    (err, categoryDeleted) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+
+      if (!categoryDeleted) {
+        return res.status(400).json({
+          ok: false,
+          err: {
+            message: 'Categoría no encontrada',
+          },
+        });
+      }
+
+      res.json({
+        ok: true,
+        category: categoryDeleted,
+      });
+    }
+  );
 });
 
 module.exports = app;
