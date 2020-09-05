@@ -75,8 +75,27 @@ app.post('/category', verifyToken, (req, res) => {
 });
 
 // Actualizar una categoría
-app.put('/category/:id', (req, res) => {
-  
+app.put('/category/:id', verifyToken, (req, res) => {
+  let { id } = req.params;
+
+  Category.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true, runValidators: true },
+    (err, catg) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+
+      res.json({
+        ok: true,
+        category: catg,
+      });
+    }
+  );
 });
 
 // Eliminar categoría
