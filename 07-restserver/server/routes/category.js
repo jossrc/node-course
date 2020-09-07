@@ -7,22 +7,25 @@ let app = express();
 let Category = require('../models/category');
 
 app.get('/category', verifyToken, (req, res) => {
-  Category.find({ state: true }).exec((err, categories) => {
-    if (err) {
-      return res.status(400).json({
-        ok: false,
-        err,
-      });
-    }
+  Category.find({ state: true })
+    .sort('description')
+    .populate('user', 'name email')
+    .exec((err, categories) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
 
-    Category.countDocuments({ state: true }, (err, count) => {
-      res.json({
-        ok: true,
-        categories,
-        count,
+      Category.countDocuments({ state: true }, (err, count) => {
+        res.json({
+          ok: true,
+          categories,
+          count,
+        });
       });
     });
-  });
 });
 
 app.get('/category/:id', verifyToken, (req, res) => {

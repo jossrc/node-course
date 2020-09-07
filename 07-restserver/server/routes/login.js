@@ -43,7 +43,7 @@ app.post('/login', (req, res) => {
         user: userDB, // Payload
       },
       process.env.SEED, // Firma (seed)
-      { expiresIn: process.env.TOKEN_EXPIRATION }
+      { expiresIn: Number(process.env.TOKEN_EXPIRATION) }
     );
 
     res.json({
