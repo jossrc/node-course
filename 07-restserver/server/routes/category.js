@@ -36,6 +36,15 @@ app.get('/category/:id', verifyToken, (req, res) => {
       });
     }
 
+    if (!catg) {
+      return res.status(400).json({
+        ok: false,
+        err: {
+          message: 'El ID no es correcto',
+        },
+      });
+    }
+
     res.json({
       ok: true,
       category: catg,
@@ -85,6 +94,13 @@ app.put('/category/:id', verifyToken, (req, res) => {
     { new: true, runValidators: true },
     (err, catg) => {
       if (err) {
+        return res.status(500).json({
+          ok: false,
+          err,
+        });
+      }
+
+      if (!catg) {
         return res.status(400).json({
           ok: false,
           err,
@@ -108,7 +124,7 @@ app.delete('/category/:id', [verifyToken, verifyAdminRole], (req, res) => {
     { new: true, runValidators: true },
     (err, categoryDeleted) => {
       if (err) {
-        return res.status(400).json({
+        return res.status(500).json({
           ok: false,
           err,
         });
@@ -118,7 +134,7 @@ app.delete('/category/:id', [verifyToken, verifyAdminRole], (req, res) => {
         return res.status(400).json({
           ok: false,
           err: {
-            message: 'Categoría no encontrada',
+            message: 'El id no existe (Categoría no encontrada)',
           },
         });
       }
