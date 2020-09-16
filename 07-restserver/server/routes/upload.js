@@ -19,9 +19,25 @@ app.put('/upload', (req, res) => {
   // req.files.<Nombre (name) del input>
   // Usando postman es en body > form-data
   let myFile = req.files.file;
+  let cutFileName = myFile.name.split('.');
+  let extension = cutFileName[cutFileName.length - 1];
+
+  // Extensiones permitidas
+  let validExtensions = ['png', 'jpg', 'gif', 'jpeg', 'svg'];
+
+  if ( validExtensions.indexOf(extension) < 0 ) {
+      return res.status(400).json({
+          ok: false,
+          err: {
+              message: 'Las extensiones permitidas son : ' + validExtensions.join(', '),
+              extension
+          }
+      })
+  }
+
 
   // Permite mover a un directorio
-  myFile.mv('uploads/filename.jpg', (err) => {
+  myFile.mv(`uploads/${myFile.name}`, (err) => {
     if (err) {
       res.status(500).json({
         ok: false,
