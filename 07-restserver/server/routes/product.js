@@ -71,6 +71,30 @@ app.get('/product/:id', verifyToken, (req, res) => {
     });
 });
 
+// Buscar productos
+app.get('/product/search/:term', verifyToken, (req, res) => {
+
+  let { term } = req.params;
+  let regex = new RegExp(term, 'i'); // El "i" es para no tener en cuenta si esta en mayuscula o no
+
+  Product.find({name: regex})
+    .populate('user', 'name email')
+    .populate('category', 'description')
+    .exec((err, products) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err,
+        });
+      }
+
+      res.json({
+        ok: true,
+        products,
+      });
+    });
+});
+
 // Crea un nuevo producto
 app.post('/product', verifyToken, (req, res) => {
   // grabar el usuario
@@ -180,7 +204,7 @@ app.delete('/product/:id', (req, res) => {
       res.json({
         ok: true,
         product,
-        message: 'Producto Borrado'
+        message: 'Producto Borrado',
       });
     }
   );
