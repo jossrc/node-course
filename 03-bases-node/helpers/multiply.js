@@ -1,17 +1,18 @@
 const fs = require('fs');
+const colors = require('colors');
 
 const createFile = async (base = 1, requireListing) => {
   try {
     let output = '';
 
     for (let i = 1; i <= 10; i++) {
-      output += `${base} x ${i} = ${5 * i}\n`;
+      output += `${base} ${'x'.bold.cyan} ${i} ${'='.bold.cyan} ${5 * i}\n`;
     }
 
     if (requireListing) {
-      console.log('========================');
-      console.log('   Tabla del:', base);
-      console.log('========================\n');
+      console.log('========================'.green);
+      console.log('   Tabla del:'.green, colors.blue(base));
+      console.log('========================\n'.green);
 
       console.log(output);
     }
