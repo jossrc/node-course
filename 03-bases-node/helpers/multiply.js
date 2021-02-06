@@ -25,13 +25,6 @@ const createFile = async (base = 1, requireListing) => {
   }
 };
 
-/*
-fs.writeFile(path, output, (err) => {
-  if (err) throw err;
-  console.log(`${path} creado`);
-});
-*/
-
 module.exports = {
   createFile,
 };
