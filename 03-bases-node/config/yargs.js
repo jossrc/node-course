@@ -3,19 +3,26 @@ const argv = require('yargs')
     alias: 'base',
     type: 'number',
     demandOption: true,
-    describe: 'Establece la base de la tabla de multiplicar'
+    describe: 'Base de la tabla de multiplicar',
   })
   .option('l', {
-    alias: 'list',
+    alias: 'limit',
+    type: 'number',
+    default: 10,
+    describe: 'Límite de la tabla de multiplicar',
+  })
+  .option('p', {
+    alias: 'print',
     type: 'boolean',
     default: false,
-    describe: 'Muestra la tabla creada en consola'
+    describe: 'Imprime la tabla creada en consola',
   })
   .check((argv, options) => {
     if (isNaN(argv.b)) throw 'La base tiene que ser un número';
+    if (isNaN(argv.l)) throw 'El límite tiene que ser un número';
     return true;
   }).argv;
 
 module.exports = {
-  argv
-}
+  argv,
+};
