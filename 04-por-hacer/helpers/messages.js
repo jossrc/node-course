@@ -3,19 +3,23 @@ require('colors');
 /**
  * Habilita la entrada, lectura y salida de texto desde la consola.
  * Se acepta una pregunta que será resuelta, en consecuencia, se retornará
- * la acción realizada.
+ * la respuesta obtenida como Promesa.
  * @param {string} text Mensaje inicial a mostrar en consola.
  * @param {(option: string) => void} callback Función que permite trabajar con la opción seleccionada.
+ * @return {Promise<string>} Respuesta establecida a la pregunta.
  */
 const enableReadline = (text, callback = null) => {
-  const readline = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+  return new Promise((resolve, reject) => {
+    const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
 
-  readline.question(text, (option) => {
-    if (callback) callback(option);
-    readline.close();
+    readline.question(text, (option) => {
+      if (callback) callback(option);
+      readline.close();
+      resolve(option);
+    });
   });
 };
 
@@ -24,7 +28,7 @@ const enableReadline = (text, callback = null) => {
  * en la aplicación de Tareas por Hacer. Adicionalmente permite
  * seleccionar una de ellas y retorna la opción elegida.
  */
-const showMenu = () => {
+const showMenu = async () => {
   console.clear();
   console.log('========================='.green);
   console.log('  Seleccione una opción  '.green);
@@ -38,10 +42,14 @@ const showMenu = () => {
   console.log(`${'6.'.green} Borrar tarea`);
   console.log(`${'0.'.green} Salir\n`);
 
-  enableReadline('Seleccione una opción: ');
+  return enableReadline('Seleccione una opción: ');
 };
 
-const pause = () =>
+/**
+ * Muestra en pantalla un mensaje y pausa las tareas
+ * hasta que se precione la tecla ENTER.
+ */
+const pause = async () =>
   enableReadline(`\nPresione ${'ENTER'.green} para continuar... \n`);
 
 module.exports = {
