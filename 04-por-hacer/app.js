@@ -1,5 +1,5 @@
 const { inquirerMenu, pause, readInput } = require('./helpers/inquirer');
-const { saveDB } = require('./helpers/saveFile');
+const { saveDB, loadDB } = require('./helpers/saveFile');
 const Tasks = require('./models/tasks');
 
 require('colors');
@@ -7,6 +7,14 @@ require('colors');
 const main = async () => {
   let answer = '';
   const tasks = new Tasks();
+
+  const tasksDB = loadDB();
+
+  if (tasksDB) {
+
+  }
+
+  await pause();
 
   do {
     answer = await inquirerMenu();
@@ -21,7 +29,7 @@ const main = async () => {
         break;
     }
 
-    saveDB(tasks.listToArray)
+    // saveDB(tasks.listToArray)
 
     await pause();
   } while (answer !== '0');
