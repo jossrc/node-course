@@ -1,14 +1,22 @@
 const { inquirerMenu, pause } = require('./helpers/inquirer');
+const Task = require('./models/task');
+const Tasks = require('./models/tasks');
 
 require('colors');
 
 const main = async () => {
-  console.log('Hola Mundo');
 
   let answer = '';
 
   do {
-    answer = await inquirerMenu();
+    // answer = await inquirerMenu();
+
+    const tasks = new Tasks();
+    const task = new Task('Comprar comida');
+
+    tasks._list[task.id] = task
+
+    console.log(tasks);
 
     await pause()
   } while (answer !== '0');
