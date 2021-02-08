@@ -11,10 +11,8 @@ const main = async () => {
   const tasksDB = loadDB();
 
   if (tasksDB) {
-
+    tasks.loadTasksFromArray(tasksDB);
   }
-
-  await pause();
 
   do {
     answer = await inquirerMenu();
@@ -29,7 +27,7 @@ const main = async () => {
         break;
     }
 
-    // saveDB(tasks.listToArray)
+    saveDB(tasks.listToArray)
 
     await pause();
   } while (answer !== '0');
