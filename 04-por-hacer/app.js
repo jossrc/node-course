@@ -1,2 +1,8 @@
+require('colors');
 
-console.log('Tareas por hacer');
+const main = async () => {
+  console.clear();
+  console.log('Hola mundo');
+}
+
+main();
