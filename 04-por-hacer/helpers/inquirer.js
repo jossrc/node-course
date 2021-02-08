@@ -42,6 +42,11 @@ const questionCollection = [
   },
 ];
 
+/**
+ * Genera y muestra un menú de opciones para manipular
+ * las tareas. La opción seleccionada contiene un valor que
+ * lo identifica, este será retornado como una Promesa.
+ */
 const inquirerMenu = async () => {
   console.clear();
   console.log('========================='.green);
@@ -53,6 +58,11 @@ const inquirerMenu = async () => {
   return option;
 };
 
+/**
+ * Pausa momentaneamente la terminal e imprime un mensaje
+ * de confirmación. Este desaparece al presionar la
+ * tecla Enter.
+ */
 const pause = async () => {
   console.log('\n');
   await inquirer.prompt([
@@ -64,6 +74,13 @@ const pause = async () => {
   ]);
 };
 
+/**
+ * Imprime en pantalla el texto deseado. La respuesta es de
+ * caracter obligatorio, este será leída y se retornará
+ * como una Promesa.
+ * @param {string} message Mensaje a imprimir.
+ * @return {Promise<string>} Respuesta al mensaje impreso.
+ */
 const readInput = async (message) => {
   const question = [
     {
