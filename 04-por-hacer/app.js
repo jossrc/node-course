@@ -23,7 +23,7 @@ const main = async () => {
         tasks.addNewTask(descriptionTask);
         break;
       case '2':
-        console.log(tasks.listToArray);
+        await tasks.showFullList();
         break;
     }
 
