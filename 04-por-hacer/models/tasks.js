@@ -1,4 +1,5 @@
 const Task = require('./task');
+const inquirer = require('inquirer');
 
 class Tasks {
   /**
@@ -9,7 +10,7 @@ class Tasks {
   _list = {};
 
   /**
-   * @returns {Task[]} Retorna la lista de tareas `_list` como un arreglo.
+   * @returns {Task[]} Retorna la lista de tareas `_list` como un arreglo de sus valores.
    */
   get listToArray() {
     return Object.values(this._list);
@@ -36,6 +37,28 @@ class Tasks {
    */
   loadTasksFromArray(tasks) {
     tasks.forEach((task) => (this._list[task.id] = task));
+  }
+
+  /**
+   * Muestra todas las tareas junto con su estado: Completada o
+   * Pendiente. Esta función usa el `inquirer.prompt()` 
+   * para interactuar con las tareas obtenidas.
+   */
+  async showFullList() {
+    await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'fullList',
+        message: 'Lista completa de tareas',
+        choices: this.listToArray.map((task, index) => {
+          const position = `${(index + 1).toString()}.`;
+          const [positionColor, state] = task.finishedDate
+            ? [position.green, 'Completada'.green]
+            : [position.red, 'Pendiente'.red];
+          return `${positionColor} ${task.description} :: ${state}`;
+        }),
+      },
+    ]);
   }
 }
 
