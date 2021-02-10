@@ -24,6 +24,11 @@ const main = async () => {
         break;
       case '2':
         await tasks.showFullList();
+      case '3':
+        tasks.showListByState(true)
+        break;
+      case '4':
+        tasks.showListByState(false)
         break;
     }
 
