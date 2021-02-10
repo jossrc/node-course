@@ -39,7 +39,7 @@ const main = async () => {
         break;
       case '5':
         const ids = await showTodoCheckList( tasks.listToArray );
-        console.log(ids);
+        tasks.toggleCompleted(ids); 
         break;
       case '6':
         const id = await showTodoListToDelete(tasks.listToArray);
