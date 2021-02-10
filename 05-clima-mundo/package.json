@@ -1,15 +1,12 @@
 {
-  "name": "05-clima-mundo",
+  "name": "05-clima-app",
   "version": "1.0.0",
   "description": "Aplicación del Clima",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "JOSE",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.20.0",
-    "yargs": "^15.4.1"
-  }
+  "keywords": [],
+  "author": "JOSE ROBLES",
+  "license": "MIT"
 }
