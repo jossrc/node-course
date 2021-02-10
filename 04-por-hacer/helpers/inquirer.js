@@ -102,6 +102,24 @@ const readInput = async (message) => {
 };
 
 /**
+ * Imprime en pantalla el mensaje de confirmación.
+ * La respuesta es un booleano como Promesa.
+ * @param {string} message Mensaje de confirmación
+ * @returns {Promise<boolean>} Respuesta obtenida
+ */
+const confirmAction = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message
+    }
+  ]
+  const { ok } = await inquirer.prompt(question);
+  return ok;
+}
+
+/**
  * Muestra la lista completa de tareas que se desean borrar.
  * La opción seleccionada retorna el ID de la tarea como
  * una Promesa.
@@ -117,10 +135,15 @@ const showTodoListToDelete = async (tasks) => {
     };
   });
 
+  choices.unshift({
+    value: '0',
+    name: `${'0.'.green} Cancelar` 
+  })
+
   const question = [
     {
       type: 'list',
-      name: 'taskID',
+      name: 'taskId',
       message: 'Borrar',
       choices,
     },
@@ -134,5 +157,6 @@ module.exports = {
   inquirerMenu,
   pause,
   readInput,
-  showTodoListToDelete
+  showTodoListToDelete,
+  confirmAction
 };
