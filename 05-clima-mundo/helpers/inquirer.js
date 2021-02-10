@@ -4,15 +4,15 @@ require('colors');
 
 const choices = [
   {
-    value: '1',
+    value: 1,
     name: `${'1.'.green} Buscar ciudad`,
   },
   {
-    value: '2',
+    value: 2,
     name: `${'2.'.green} Historial`,
   },
   {
-    value: '0',
+    value: 0,
     name: `${'0.'.green} Salir`,
   },
 ];
@@ -30,6 +30,7 @@ const questionCollection = [
  * Genera y muestra un menú de opciones para manipular
  * las tareas. La opción seleccionada contiene un valor que
  * lo identifica, este será retornado como una Promesa.
+ * @returns {Promise<number>} Opción elegida (número)
  */
 const inquirerMenu = async () => {
   console.clear();
