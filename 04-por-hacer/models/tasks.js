@@ -41,7 +41,7 @@ class Tasks {
 
   /**
    * Muestra todas las tareas junto con su estado: Completada o
-   * Pendiente. Esta función usa el `inquirer.prompt()` 
+   * Pendiente. Esta función usa el `inquirer.prompt()`
    * para interactuar con las tareas obtenidas.
    */
   async showFullList() {
@@ -59,6 +59,21 @@ class Tasks {
         }),
       },
     ]);
+  }
+
+  
+  showListByState(completed = true) {
+    this.listToArray
+      .filter((task) => (completed ? task.finishedDate : !task.finishedDate))
+      .forEach((task, index) => {
+        const position = `${(index + 1).toString()}.`;
+        const [positionColor, state] = task.finishedDate
+            ? [position.green, task.finishedDate.green]
+            : [position.red, 'Pendiente'.red];
+        console.log(
+          `${positionColor} ${task.description} :: ${state}`
+        );
+      });
   }
 }
 
