@@ -61,19 +61,30 @@ class Tasks {
     ]);
   }
 
-  
+  /**
+   * Muestra la lista completa de tareas según su estado.
+   * @param {boolean} completed Estado de la tarea: Completado `true` Pendiente `false`
+   */
   showListByState(completed = true) {
     this.listToArray
       .filter((task) => (completed ? task.finishedDate : !task.finishedDate))
       .forEach((task, index) => {
         const position = `${(index + 1).toString()}.`;
         const [positionColor, state] = task.finishedDate
-            ? [position.green, task.finishedDate.green]
-            : [position.red, 'Pendiente'.red];
-        console.log(
-          `${positionColor} ${task.description} :: ${state}`
-        );
+          ? [position.green, task.finishedDate.green]
+          : [position.red, 'Pendiente'.red];
+        console.log(`${positionColor} ${task.description} :: ${state}`);
       });
+  }
+
+  /**
+   * Elimina una tarea mediante su ID único.
+   * @param {string} id Identificador de una tarea
+   */
+  deleteOneByID(id) {
+    if (this._list[id]) {
+      delete this._list[id];
+    }
   }
 }
 
