@@ -112,19 +112,19 @@ const confirmAction = async (message) => {
     {
       type: 'confirm',
       name: 'ok',
-      message
-    }
-  ]
+      message,
+    },
+  ];
   const { ok } = await inquirer.prompt(question);
   return ok;
-}
+};
 
 /**
  * Muestra la lista completa de tareas que se desean borrar.
  * La opción seleccionada retorna el ID de la tarea como
  * una Promesa.
  * @param {Task[]} tasks Arreglo de tareas
- * @returns {Promise<string>}
+ * @returns {Promise<string>} Id de la tarea seleccionada
  */
 const showTodoListToDelete = async (tasks) => {
   const choices = tasks.map((task, i) => {
@@ -137,8 +137,8 @@ const showTodoListToDelete = async (tasks) => {
 
   choices.unshift({
     value: '0',
-    name: `${'0.'.green} Cancelar` 
-  })
+    name: `${'0.'.green} Cancelar`,
+  });
 
   const question = [
     {
@@ -153,10 +153,41 @@ const showTodoListToDelete = async (tasks) => {
   return taskId;
 };
 
+/**
+ * Muestra una lista de checkboxes de todas las tareas completadas y pendientes.
+ * Al presionar la tecla Enter retorna un arreglo de identificadores de las tareas
+ * pero como una Promesa.
+ * @param {Task[]} tasks Arreglo de tareas
+ * @returns {Promise<string[]>} Arreglo de ids de las tareas
+ */
+const showTodoCheckList = async (tasks) => {
+  const choices = tasks.map((task, i) => {
+    const position = `${(i + 1).toString()}.`.green;
+    return {
+      value: task.id,
+      name: `${position} ${task.description}`,
+      checked: task.finishedDate ? true : false,
+    };
+  });
+
+  const question = [
+    {
+      type: 'checkbox',
+      name: 'taskIds',
+      message: 'Seleccione',
+      choices,
+    },
+  ];
+
+  const { taskIds } = await inquirer.prompt(question);
+  return taskIds;
+};
+
 module.exports = {
   inquirerMenu,
   pause,
   readInput,
   showTodoListToDelete,
-  confirmAction
+  confirmAction,
+  showTodoCheckList,
 };
