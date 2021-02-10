@@ -1,4 +1,10 @@
-const { inquirerMenu, pause, readInput, showTodoListToDelete } = require('./helpers/inquirer');
+const {
+  inquirerMenu,
+  pause,
+  readInput,
+  showTodoListToDelete,
+  confirmAction,
+} = require('./helpers/inquirer');
 const { saveDB, loadDB } = require('./helpers/saveFile');
 const Tasks = require('./models/tasks');
 
@@ -25,18 +31,24 @@ const main = async () => {
       case '2':
         await tasks.showFullList();
       case '3':
-        tasks.showListByState(true)
+        tasks.showListByState(true);
         break;
       case '4':
-        tasks.showListByState(false)
+        tasks.showListByState(false);
         break;
       case '6':
         const id = await showTodoListToDelete(tasks.listToArray);
-        console.log({id});
-        break;
+
+        if (id !== '0') {
+          const ok = await confirmAction('¿Estás seguro?');
+          if (ok) {
+            tasks.deleteOneByID(id);
+            console.log('Tarea Borrada');
+          }
+        }
     }
 
-    saveDB(tasks.listToArray)
+    saveDB(tasks.listToArray);
 
     await pause();
   } while (answer !== '0');
