@@ -1,35 +1,36 @@
 const inquirer = require('inquirer');
+const Task = require('../models/task');
 
 require('colors');
 
 const choices = [
   {
     value: '1',
-    name: `${'1.'.green} Crear tarea`
+    name: `${'1.'.green} Crear tarea`,
   },
   {
     value: '2',
-    name: `${'2.'.green} Listar tareas`
+    name: `${'2.'.green} Listar tareas`,
   },
   {
     value: '3',
-    name: `${'3.'.green} Listar tareas completadas`
+    name: `${'3.'.green} Listar tareas completadas`,
   },
   {
     value: '4',
-    name: `${'4.'.green} Listar tareas pendientes`
+    name: `${'4.'.green} Listar tareas pendientes`,
   },
   {
     value: '5',
-    name: `${'5.'.green} Completar tarea(s)`
+    name: `${'5.'.green} Completar tarea(s)`,
   },
   {
     value: '6',
-    name: `${'6.'.green} Borrar tarea`
+    name: `${'6.'.green} Borrar tarea`,
   },
   {
     value: '0',
-    name: `${'0.'.green} Salir`
+    name: `${'0.'.green} Salir`,
   },
 ];
 
@@ -100,8 +101,38 @@ const readInput = async (message) => {
   return description;
 };
 
+/**
+ * Muestra la lista completa de tareas que se desean borrar.
+ * La opción seleccionada retorna el ID de la tarea como
+ * una Promesa.
+ * @param {Task[]} tasks Arreglo de tareas
+ * @returns {Promise<string>}
+ */
+const showTodoListToDelete = async (tasks) => {
+  const choices = tasks.map((task, i) => {
+    const position = `${(i + 1).toString()}.`.green;
+    return {
+      value: task.id,
+      name: `${position} ${task.description}`,
+    };
+  });
+
+  const question = [
+    {
+      type: 'list',
+      name: 'taskID',
+      message: 'Borrar',
+      choices,
+    },
+  ];
+
+  const { taskId } = await inquirer.prompt(question);
+  return taskId;
+};
+
 module.exports = {
   inquirerMenu,
   pause,
   readInput,
+  showTodoListToDelete
 };
