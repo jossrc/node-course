@@ -1,17 +1,23 @@
+const { default: axios } = require('axios');
+
+require('dotenv').config();
 
 class Searches {
+  historial = ['Lima', 'Madrid', 'Bogota'];
 
-  historial = ['Lima', 'Madrid', 'Bogota']
+  get paramsMapbox() {
+    return {
+      access_token: process.env.MAPBOX_KEY,
+      limit: 5,
+      language: 'es',
+    };
+  }
 
   constructor() {
     // TODO: Leer DB si existe
   }
 
-  async city( place = '' ) {
-    // TODO: Petición http
-    return []; // Retorna los lugares que coincidan
-  }
-
+  async getCity(place = '') {}
 }
 
-module.exports = Searches
+module.exports = Searches;
