@@ -1,5 +1,5 @@
 {
-  "name": "05-clima-app",
+  "name": "05-clima-mundo",
   "version": "1.0.0",
   "description": "Aplicación del Clima",
   "main": "app.js",
@@ -10,6 +10,7 @@
   "author": "JOSE ROBLES",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.4.0",
     "inquirer": "^7.3.3"
   }
 }
