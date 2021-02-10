@@ -103,10 +103,38 @@ const confirmAction = async (message) => {
   return ok;
 };
 
+const showFoundPlaces = async (places = []) => {
+  const choices = places.map((place, i) => {
+    const position = `${i + 1}.`.green;
+    return {
+      value: place.id,
+      name: `${position} ${place.name}`,
+    };
+  });
+
+  choices.unshift({
+    value: 0,
+    name: `${'0.'.green} Cancelar`,
+  });
+
+  const question = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Seleccione lugar: ',
+      choices,
+    },
+  ];
+
+  const { id } = await inquirer.prompt(question);
+
+  return id;
+};
 
 module.exports = {
   inquirerMenu,
   pause,
   readInput,
   confirmAction,
+  showFoundPlaces,
 };
