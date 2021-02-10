@@ -86,6 +86,28 @@ class Tasks {
       delete this._list[id];
     }
   }
+
+  /**
+   * Permite alternar el estado de una tarea, es decir,
+   * de completado a pendiente. Al estar completado la propiedad
+   * `finishedDate` de una tarea será la fecha de finalización. En caso
+   * de ser pendiente será `null`
+   * @param {string[]} ids Identificador de una tarea
+   */
+  toggleCompleted(ids) {
+    ids.forEach((id) => {
+      const task = this._list[id];
+      if (!task.finishedDate) {
+        task.finishedDate = new Date().toISOString();
+      }
+    });
+
+    this.listToArray.forEach((task) => {
+      if (!ids.includes(task.id)) {
+        this._list[task.id].finishedDate = null;
+      }
+    });
+  }
 }
 
 module.exports = Tasks;
