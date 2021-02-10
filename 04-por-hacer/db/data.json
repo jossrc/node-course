@@ -1,0 +1,17 @@
+[
+  {
+    "id": "5b3793c9-6d77-4e1b-be37-ea7b8de5f2c8",
+    "description": "Estudiar Angular",
+    "finishedDate": "2021-02-10T14:58:42.857Z"
+  },
+  {
+    "id": "1a5e2495-57c2-4825-b065-29b59c348e9e",
+    "description": "Crear proyecto con java web",
+    "finishedDate": null
+  },
+  {
+    "id": "3486533c-eab8-4b67-aa4c-5bc03cf05487",
+    "description": "Repasar un poco más de Node",
+    "finishedDate": "2021-02-10T14:58:42.857Z"
+  }
+]
