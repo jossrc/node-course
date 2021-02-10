@@ -1,4 +1,4 @@
-const { inquirerMenu, pause, readInput } = require('./helpers/inquirer');
+const { inquirerMenu, pause, readInput, showTodoListToDelete } = require('./helpers/inquirer');
 const { saveDB, loadDB } = require('./helpers/saveFile');
 const Tasks = require('./models/tasks');
 
@@ -29,6 +29,10 @@ const main = async () => {
         break;
       case '4':
         tasks.showListByState(false)
+        break;
+      case '6':
+        const id = await showTodoListToDelete(tasks.listToArray);
+        console.log({id});
         break;
     }
 
