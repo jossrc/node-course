@@ -1,9 +1,12 @@
+const fs = require('fs');
+
 const { default: axios } = require('axios');
 
 require('dotenv').config();
 
 class Searches {
   historial = ['Lima', 'Madrid', 'Bogota'];
+  PATH = './db/database.json'
 
   get paramsMapbox() {
     return {
@@ -70,6 +73,32 @@ class Searches {
       console.log(`Sucedió un error: ${error}`);
     }
   }
+
+  saveDB() {
+    const payload = {
+      historial: this.historial
+    };
+
+    fs.writeFileSync(this.PATH, JSON.stringify(payload));
+  }
+
+  loadDB() {
+
+  }
+
+  addHistorial(place = '') {
+
+    if (this.historial.includes(place.toLocaleLowerCase())) {
+      return;
+    }
+
+    this.historial.unshift(place.toLocaleLowerCase());
+
+    this.saveDB();
+  }
+
+  
+
 }
 
 module.exports = Searches;
