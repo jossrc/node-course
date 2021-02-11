@@ -22,14 +22,20 @@ const main = async () => {
         if (placeId !== 0) {
           const selectedPlace = places.find((place) => place.id === placeId);
 
+          const weather = await searches.getWeatherByCoordinates(
+            selectedPlace.lat,
+            selectedPlace.lng
+          );
+
           // Mostrar resultados
           console.log('\nInformación de la ciudad\n'.green);
           console.log(`Ciudad: ${selectedPlace.name}`);
           console.log(`Lat: ${selectedPlace.lat}`);
           console.log(`Lng: ${selectedPlace.lng}`);
-          console.log('Temperatura:');
-          console.log('Mínima');
-          console.log('Máxima');
+          console.log(`Temperatura: ${weather.temp} °C`);
+          console.log(`Mínima ${weather.min} °C`);
+          console.log(`Máxima ${weather.max} °C`);
+          console.log(`Como está el clima: ${weather.desc}`);
         }
         break;
       case 2:
