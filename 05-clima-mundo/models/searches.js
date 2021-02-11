@@ -6,7 +6,7 @@ require('dotenv').config();
 
 class Searches {
   historial = ['Lima', 'Madrid', 'Bogota'];
-  PATH = './db/database.json'
+  PATH = './db/database.json';
 
   get paramsMapbox() {
     return {
@@ -24,8 +24,19 @@ class Searches {
     };
   }
 
+  get capitalizedHistorial() {
+    const capitalized = this.historial.map((txt) => {
+      let words = txt.split(' ');
+      words = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+      return words.join(' ');
+    });
+
+    return capitalized;
+  }
+
   constructor() {
-    // TODO: Leer DB si existe
+    this.loadDB();
+    this.historial = this.capitalizedHistorial;
   }
 
   async getCity(place = '') {
@@ -76,29 +87,34 @@ class Searches {
 
   saveDB() {
     const payload = {
-      historial: this.historial
+      historial: this.historial,
     };
 
     fs.writeFileSync(this.PATH, JSON.stringify(payload));
   }
 
   loadDB() {
+    if (!fs.existsSync(this.PATH)) {
+      return null;
+    }
 
+    const info = fs.readFileSync(this.PATH, { encoding: 'utf-8' });
+    const data = JSON.parse(info);
+
+    this.historial = data.historial;
   }
 
   addHistorial(place = '') {
-
     if (this.historial.includes(place.toLocaleLowerCase())) {
       return;
     }
+
+    this.historial = this.historial.splice(0,5)
 
     this.historial.unshift(place.toLocaleLowerCase());
 
     this.saveDB();
   }
-
-  
-
 }
 
 module.exports = Searches;
