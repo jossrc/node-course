@@ -21,6 +21,7 @@ const main = async () => {
 
         if (placeId !== 0) {
           const selectedPlace = places.find((place) => place.id === placeId);
+          searches.addHistorial(selectedPlace.name)
 
           const weather = await searches.getWeatherByCoordinates(
             selectedPlace.lat,
@@ -39,7 +40,10 @@ const main = async () => {
         }
         break;
       case 2:
-        console.log('Viendo el historial');
+        searches.historial.forEach( (place, i) => {
+          const position = `${i+1}.`.green;
+          console.log(`${position} ${place}`);
+        })
         break;
     }
 
