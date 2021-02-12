@@ -3,16 +3,19 @@ const app = express()
 
 const PORT = 8080
 
-app.get('/', (req, res) => {
-  res.send('<h2>Home</h2>')
+// Servir contenido estático
+app.use( express.static('public') )
+
+app.get('/generic', (req, res) => {
+  res.sendFile(`${__dirname}/public/generic.html`)
 })
 
-app.get('/about', (req, res) => {
-  res.send(`<h2>Sobre mi</h2>`)
+app.get('/elements', (req, res) => {
+  res.sendFile(`${__dirname}/public/elements.html`)
 })
 
 app.get('*', (req, res)=> {
-  res.send(`<h2>404 | Page not found</h2>`)
+  res.sendFile(`${__dirname}/public/404.html`);
 });
 
 app.listen(PORT, ()=> {
