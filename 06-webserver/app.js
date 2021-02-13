@@ -1,13 +1,14 @@
 const express = require('express');
 const hbs = require('hbs');
+require('dotenv').config();
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT;
 
 // Handlebar
 app.set('view engine', 'hbs');
 hbs.registerPartials(`${__dirname}/views/partials`, (err) => {
-  console.log(err);
+  if (err) console.log(err);
 });
 
 // Servir contenido estático
