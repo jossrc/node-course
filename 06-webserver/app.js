@@ -1,32 +1,41 @@
 const express = require('express');
-const app = express();
+const hbs = require('hbs');
 
+const app = express();
 const PORT = 8080;
 
+// Handlebar
 app.set('view engine', 'hbs');
+hbs.registerPartials(`${__dirname}/views/partials`, (err) => {
+  console.log(err);
+});
 
 // Servir contenido estático
 app.use(express.static('public'));
 
+const hbsOptions = {
+  name: 'Jose Robles',
+  title: 'Curso de Node',
+};
+
+// Rutas del proyecto
 app.get('/', (req, res) => {
-  res.render('home', {
-    name: 'Jose Robles',
-    title: 'Curso de Node'
-  });
+  res.render('home', hbsOptions);
 });
 
 app.get('/generic', (req, res) => {
-  res.sendFile(`${__dirname}/public/generic.html`);
+  res.render('generic', hbsOptions);
 });
 
 app.get('/elements', (req, res) => {
-  res.sendFile(`${__dirname}/public/elements.html`);
+  res.render('elements', hbsOptions);
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/public/404.html`);
+  res.send('404 | Page not found')
 });
 
+// Escuchando los cambios
 app.listen(PORT, () => {
   console.log(`Corriendo en el puerto ${PORT}`);
 });
