@@ -19,22 +19,26 @@ class Server {
 
   routes() {
     this.app.get('/api', (req, res) => {
-      // res.send('Hello World API');
       res.json({
-        // ok: true, -> Status 200
         message: 'GET API',
       });
     });
 
     this.app.put('/api', (req, res) => {
-      res.json({
+      res.status(400).json({
         message: 'PUT API',
       });
     });
 
     this.app.post('/api', (req, res) => {
-      res.json({
+      res.status(201).json({
         message: 'POST API',
+      });
+    });
+
+    this.app.patch('/api', (req, res) => {
+      res.json({
+        message: 'PATCH API',
       });
     });
 
