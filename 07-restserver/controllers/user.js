@@ -6,8 +6,14 @@ const { request, response } = require('express');
  * @param res Response
  */
 const getUsers = (req = request, res = response) => {
+
+  const { q, name = 'No name', apikey, page, limit } = req.query;
+
   res.json({
     message: 'GET API - USUARIOS - CONTROLLER',
+    content : {
+      q, name, apikey, page, limit
+    }
   });
 };
 
@@ -24,8 +30,12 @@ const postUsers = (req = request, res = response) => {
 };
 
 const putUsers = (req = request, res = response) => {
+
+  const { id } = req.params;
+
   res.json({
     message: 'PUT API - USUARIOS - CONTROLLER',
+    id
   });
 };
 
