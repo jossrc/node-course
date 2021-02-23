@@ -1,4 +1,5 @@
 const { request, response } = require('express');
+const User = require('../models/user');
 
 /**
  * Obtiene todos los usuarios
@@ -17,15 +18,15 @@ const getUsers = (req = request, res = response) => {
   });
 };
 
-const postUsers = (req = request, res = response) => {
-  const { name, age } = req.body;
+const postUsers = async (req = request, res = response) => {
+  const body = req.body;
+  const user = new User(body);
+
+  await user.save();
 
   res.json({
     message: 'POST API - USUARIOS - CONTROLLER',
-    user: {
-      name,
-      age,
-    },
+    user
   });
 };
 
