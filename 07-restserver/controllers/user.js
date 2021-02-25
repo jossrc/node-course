@@ -9,51 +9,50 @@ const User = require('../models/user');
  * @param res Response
  */
 const getUsers = (req = request, res = response) => {
-
   const { q, name = 'No name', apikey, page, limit } = req.query;
 
   res.json({
     message: 'GET API - USUARIOS - CONTROLLER',
-    content : {
-      q, name, apikey, page, limit
-    }
+    content: {
+      q,
+      name,
+      apikey,
+      page,
+      limit,
+    },
   });
 };
 
 const postUsers = async (req = request, res = response) => {
-
   const { name, email, password, role } = req.body;
   const user = new User({ name, email, password, role });
 
-  // Encriptar la contraseña
   const salt = bcryptjs.genSaltSync();
-  user.password = bcryptjs.hashSync( password, salt );
+  user.password = bcryptjs.hashSync(password, salt);
 
-  // Guardar en BD
   await user.save();
 
   res.json({
     message: 'POST API - USUARIOS - CONTROLLER',
-    user
+    user,
   });
 };
 
 const putUsers = async (req = request, res = response) => {
-
   const { id } = req.params;
-  const { password, google, email, ...importantDataUser } = req.body;
+  const { _id, password, google, email, ...importantDataUser } = req.body;
 
   //TODO: Validar password con la base de datos
   if (password) {
     const salt = bcryptjs.genSaltSync();
-    importantDataUser.password = bcryptjs.hashSync( password, salt );
+    importantDataUser.password = bcryptjs.hashSync(password, salt);
   }
 
-  const user = await User.findByIdAndUpdate(id, importantDataUser)
+  const user = await User.findByIdAndUpdate(id, importantDataUser);
 
   res.json({
     message: 'PUT API - USUARIOS - CONTROLLER',
-    user
+    user,
   });
 };
 

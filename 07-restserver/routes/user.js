@@ -10,13 +10,22 @@ const {
 } = require('../controllers/user');
 
 const { dataValidator } = require('../middlewares/dataValidator');
-const { isValidRole, existsEmail } = require("../helpers/db-validators");
+const { isValidRole, existsEmail, existsUserById } = require("../helpers/db-validators");
 
 const router = Router();
 
 router.get('/', getUsers);
 
-router.put('/:id', putUsers);
+router.put('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( async (id) => {
+        await existsUserById(id);
+    }),
+    check('role').custom( async (role) => {
+        await isValidRole(role);
+    }),
+    dataValidator,
+] ,putUsers);
 
 router.post(
   '/',
