@@ -10,6 +10,7 @@ const {
 } = require('../controllers/user');
 
 const { dataValidator } = require('../middlewares/dataValidator');
+const { isValidRole } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -25,7 +26,9 @@ router.post(
     check('password', 'El password debe ser más de 6 dígitos').isLength({
       min: 6,
     }),
-    check('role', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    check('role').custom( async (role) => {
+      await isValidRole(role)
+    }),
     dataValidator,
   ],
   postUsers
