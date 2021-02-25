@@ -10,7 +10,7 @@ const {
 } = require('../controllers/user');
 
 const { dataValidator } = require('../middlewares/dataValidator');
-const { isValidRole } = require("../helpers/db-validators");
+const { isValidRole, existsEmail } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -23,11 +23,14 @@ router.post(
   [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('email', 'El correo no es válido').isEmail(),
+    check('email').custom( async (email) =>  {
+        await existsEmail(email);
+    }),
     check('password', 'El password debe ser más de 6 dígitos').isLength({
       min: 6,
     }),
     check('role').custom( async (role) => {
-      await isValidRole(role)
+      await isValidRole(role);
     }),
     dataValidator,
   ],
