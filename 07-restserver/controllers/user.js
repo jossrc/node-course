@@ -38,13 +38,22 @@ const postUsers = async (req = request, res = response) => {
   });
 };
 
-const putUsers = (req = request, res = response) => {
+const putUsers = async (req = request, res = response) => {
 
   const { id } = req.params;
+  const { password, google, email, ...importantDataUser } = req.body;
+
+  //TODO: Validar password con la base de datos
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    importantDataUser.password = bcryptjs.hashSync( password, salt );
+  }
+
+  const user = await User.findByIdAndUpdate(id, importantDataUser)
 
   res.json({
     message: 'PUT API - USUARIOS - CONTROLLER',
-    id
+    user
   });
 };
 
