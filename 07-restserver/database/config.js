@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 
-const DEVELOPMENT = process.env.MONGODB_LOCAL;
-const PRODUCTION = process.env.MONGODB_CNN;
-
 const dbConnection = async () => {
   try {
-    await mongoose.connect(DEVELOPMENT, {
+    await mongoose.connect(process.env.MONGODB_CNN, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
