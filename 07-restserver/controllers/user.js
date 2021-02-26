@@ -4,22 +4,31 @@ const bcryptjs = require('bcryptjs');
 const User = require('../models/user');
 
 /**
- * Obtiene todos los usuarios
+ * Obtiene los primeros cinco usuarios o
+ * pueden obtenerse según el valor inicial
+ * y su límite. Estos valores son
+ * de los query params.
  * @param req Request
  * @param res Response
  */
-const getUsers = (req = request, res = response) => {
-  const { q, name = 'No name', apikey, page, limit } = req.query;
+const getUsers = async (req = request, res = response) => {
+  const { since = 0, limit = 5 } = req.query;
+  const filter = { state: true };
+
+  if (isNaN(Number(since)) || isNaN(Number(limit)))
+    return res.status(400).json({
+      message: 'Ingrese un valor inicial y/o limite válido',
+    });
+
+  const [total, users] = await Promise.all([
+    User.countDocuments(filter),
+    User.find(filter).skip(Number(since)).limit(Number(limit)),
+  ]);
 
   res.json({
-    message: 'GET API - USUARIOS - CONTROLLER',
-    content: {
-      q,
-      name,
-      apikey,
-      page,
-      limit,
-    },
+    message: 'Usuarios obtenidos exitosamente',
+    total,
+    users,
   });
 };
 
@@ -33,7 +42,7 @@ const postUsers = async (req = request, res = response) => {
   await user.save();
 
   res.json({
-    message: 'POST API - USUARIOS - CONTROLLER',
+    message: 'Nuevo usuario agregado a la BD',
     user,
   });
 };
@@ -51,7 +60,7 @@ const putUsers = async (req = request, res = response) => {
   const user = await User.findByIdAndUpdate(id, importantDataUser);
 
   res.json({
-    message: 'PUT API - USUARIOS - CONTROLLER',
+    message: 'Usuario actualizado correctamente',
     user,
   });
 };
