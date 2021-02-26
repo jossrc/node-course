@@ -48,6 +48,12 @@ router.post(
 
 router.patch('/', patchUsers);
 
-router.delete('/', deleteUsers);
+router.delete('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( async (id) => {
+        await existsUserById(id);
+    }),
+    dataValidator
+] ,deleteUsers);
 
 module.exports = router;

@@ -71,9 +71,13 @@ const patchUsers = (req = request, res = response) => {
   });
 };
 
-const deleteUsers = (req = request, res = response) => {
+const deleteUsers = async (req = request, res = response) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(id, {state: false});
+
   res.json({
-    message: 'DELETE API - USUARIOS - CONTROLLER',
+    message: 'Usuario eliminado',
+    user
   });
 };
 
