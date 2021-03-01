@@ -74,13 +74,10 @@ const patchUsers = (req = request, res = response) => {
 const deleteUsers = async (req = request, res = response) => {
   const { id } = req.params;
 
-  const uid = req.uid;
-
   const user = await User.findByIdAndUpdate(id, {state: false});
 
   res.json({
     message: 'Usuario eliminado',
-    uid,
     user
   });
 };

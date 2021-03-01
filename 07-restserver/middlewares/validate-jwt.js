@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { request, response } = require('express');
+const User = require('../models/user');
 
-const validateJWT = (req = request, res = response, next) => {
+const validateJWT = async (req = request, res = response, next) => {
   // Se establece el nombre de nuestro header
   const token = req.header('x-token');
 
@@ -12,8 +13,20 @@ const validateJWT = (req = request, res = response, next) => {
 
   try {
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-    // Se envía el uid por la request a nivel global
-    req.uid = uid;
+    // Se envía el usuario autenticado por la request a nivel global
+    const authenticatedUser = await User.findById(uid);
+
+    if (!authenticatedUser)
+      return res.status(401).json({
+        message: 'Token no válido - usuario no existe en la BD',
+      });
+
+    if (!authenticatedUser.state)
+      return res.status(401).json({
+        message: 'Token no válido - usuario eliminado',
+      });
+
+    req.authenticatedUser = authenticatedUser;
 
     next();
   } catch (err) {
