@@ -11,7 +11,7 @@ const {
 
 const { dataValidator } = require('../middlewares/dataValidator');
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { verifyAdminRole } = require("../middlewares/validate-roles");
+const { existsRole } = require("../middlewares/validate-roles");
 
 const {
   isValidRole,
@@ -63,7 +63,7 @@ router.delete(
   '/:id',
   [
     validateJWT,
-    verifyAdminRole,
+    existsRole('ADMIN_ROLE', 'SALES_ROLE'),
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom(async (id) => {
       await existsUserById(id);
