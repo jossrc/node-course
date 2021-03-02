@@ -2,7 +2,7 @@ const bcryptjs = require('bcryptjs');
 const { request, response } = require('express');
 
 const User = require('../models/user');
-const { generateJWT } = require("../helpers/generate-jwt");
+const { generateJWT } = require('../helpers/generate-jwt');
 
 const login = async (req = request, res = response) => {
   const { email, password } = req.body;
@@ -33,9 +33,8 @@ const login = async (req = request, res = response) => {
 
     res.json({
       user,
-      token
+      token,
     });
-
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -44,6 +43,16 @@ const login = async (req = request, res = response) => {
   }
 };
 
+const googleSignIn = (req = request, res = response) => {
+  const { id_token } = req.body;
+
+  res.json({
+    message: 'Todo ok! Google Sign In',
+    id_token,
+  });
+};
+
 module.exports = {
   login,
+  googleSignIn,
 };
