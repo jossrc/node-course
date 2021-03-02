@@ -9,9 +9,7 @@ const {
   deleteUsers,
 } = require('../controllers/user');
 
-const { dataValidator } = require('../middlewares/dataValidator');
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { existsRole } = require("../middlewares/validate-roles");
+const { dataValidator, validateJWT, existsRole } = require('../middlewares');
 
 const {
   isValidRole,
