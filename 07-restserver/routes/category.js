@@ -1,30 +1,36 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { validateJWT, dataValidator } = require('../middlewares');
-const { createCategory } = require('../controllers/category');
+const { validateJWT, dataValidator, existsRole, verifyAdminRole } = require('../middlewares');
+const {
+  createCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory
+} = require('../controllers/category');
+const { existsCategory } = require('../helpers/db-validators');
 
 const router = Router();
 
-// Obtener todas las categorías - publico
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Todo ok - GET',
-  });
-});
+router.get('/', getCategories);
 
-// Obtener una categoría por id - público
-router.get('/:id', (req, res) => {
-  res.json({
-    message: 'Todo ok - GET - ID',
-  });
-});
+router.get(
+  '/:id',
+  [
+    check('id').custom(async (id) => {
+      await existsCategory(id);
+    }),
+    dataValidator,
+  ],
+  getCategory
+);
 
-// Crear categoría - privado - cualquier persona con un token válido
 router.post(
   '/',
   [
     validateJWT,
+    existsRole('ADMIN_ROLE', 'SALES_ROLE'),
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     dataValidator,
   ],
@@ -32,17 +38,28 @@ router.post(
 );
 
 // Actualizar - privado - cualquiera con token válido
-router.put('/:id', (req, res) => {
-  res.json({
-    message: 'Todo ok - PUT',
-  });
-});
+router.put(
+  '/:id',
+  [
+    validateJWT,
+    existsRole('ADMIN_ROLE', 'SALES_ROLE'),
+    check('id').custom(async (id) => {
+      await existsCategory(id);
+    }),
+    check('name', 'El nombre es obligatorio').not().isEmpty(),
+    dataValidator,
+  ],
+  updateCategory
+);
 
 // Borrar una categoría - Admin
-router.delete('/:id', (req, res) => {
-  res.json({
-    message: 'Todo ok - PUT - DELETE',
-  });
-});
+router.delete('/:id', [
+    validateJWT,
+    verifyAdminRole,
+    check('id').custom(async (id) => {
+        await existsCategory(id);
+    }),
+    dataValidator,
+] , deleteCategory);
 
 module.exports = router;
