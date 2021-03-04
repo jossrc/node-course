@@ -18,6 +18,7 @@ router.get('/', getCategories);
 router.get(
   '/:id',
   [
+    check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom(async (id) => {
       await existsCategory(id);
     }),
@@ -37,12 +38,12 @@ router.post(
   createCategory
 );
 
-// Actualizar - privado - cualquiera con token válido
 router.put(
   '/:id',
   [
     validateJWT,
     existsRole('ADMIN_ROLE', 'SALES_ROLE'),
+    check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom(async (id) => {
       await existsCategory(id);
     }),
@@ -52,10 +53,10 @@ router.put(
   updateCategory
 );
 
-// Borrar una categoría - Admin
 router.delete('/:id', [
     validateJWT,
     verifyAdminRole,
+    check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom(async (id) => {
         await existsCategory(id);
     }),

@@ -1,9 +1,6 @@
 const { request, response } = require('express');
 const { Category } = require('../models');
 
-// getCategories - paginado - total - populate
-// getCategory - populate {}
-
 const getCategories = async (req = request, res = response) => {
   const { since = 0, limit = 5 } = req.query;
   const filter = { state: true };
@@ -73,14 +70,14 @@ const createCategory = async (req = request, res = response) => {
 };
 
 const updateCategory = async (req = request, res = response) => {
-  // const authenticatedUser = req.authenticatedUser;
+  const authenticatedUser = req.authenticatedUser;
   const { id: categoryID } = req.params;
   const { name } = req.body;
 
   // Obtiene la categoría actualizada
   const category = await Category.findByIdAndUpdate(
     categoryID,
-    { name },
+    { name, user: authenticatedUser._id },
     { new: true }
   );
 
