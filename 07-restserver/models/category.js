@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const CategorySchema = new Schema({
   name: {
-    type: 'string',
+    type: String,
     unique: true,
     required: [true, ' El nombre es obligatorio'],
   },
