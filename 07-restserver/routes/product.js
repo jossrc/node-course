@@ -61,7 +61,6 @@ router.put(
     check('id').custom(async (id) => {
       await existsProduct(id);
     }),
-    check('name', 'El nombre es obligatorio').not().isEmpty(),
     check(
       'category',
       'La categoría no tiene un id de Mongo válido'
