@@ -34,6 +34,28 @@ const searchUsers = async (term = '', res = response)=> {
 
 }
 
+const searchProducts = async (term = '', res = response)=> {
+    const isMongoId = ObjectId.isValid(term);
+
+    if (isMongoId) {
+        const product = await Product.findById(term).populate('category', 'name');
+        return res.json({
+            results: ( product ? [product] : [] )
+        })
+    }
+
+    const regex = new RegExp(term, 'i');
+    const products = await Product.find({
+       name: regex,
+       state: true
+    }).populate('category', 'name');
+
+    res.json({
+        results: products
+    })
+
+}
+
 const searchCategories = async (term = '', res = response)=> {
     const isMongoId = ObjectId.isValid(term);
 
@@ -46,8 +68,8 @@ const searchCategories = async (term = '', res = response)=> {
 
     const regex = new RegExp(term, 'i');
     const categories = await Category.find({
-       name: regex,
-       state: true
+        name: regex,
+        state: true
     });
 
     res.json({
@@ -67,12 +89,13 @@ const search = (req = request, res = response) => {
 
     switch (collection) {
         case 'usuarios':
-            searchUsers(term, res)
+            searchUsers(term, res);
             break;
         case 'categorias':
-            searchCategories(term, res)
+            searchCategories(term, res);
             break;
         case 'productos':
+            searchProducts(term, res);
             break;
         default:
             res.status(500).json({
