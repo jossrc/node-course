@@ -45,8 +45,9 @@ const searchCategories = async (term = '', res = response)=> {
     }
 
     const regex = new RegExp(term, 'i');
-    const categories = await User.find({
-        $and: [{ name: regex },{ state: true }]
+    const categories = await Category.find({
+       name: regex,
+       state: true
     });
 
     res.json({
