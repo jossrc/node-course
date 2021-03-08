@@ -1,10 +1,10 @@
 const { request, response } = require('express');
 const { ObjectId } = require('mongoose').Types;
-const { User } = require("../models");
+const { User, Category, Product } = require("../models");
 
 const allowedCollections = [
     'usuarios',
-    'categoria',
+    'categorias',
     'productos',
     'roles'
 ];
@@ -34,6 +34,27 @@ const searchUsers = async (term = '', res = response)=> {
 
 }
 
+const searchCategories = async (term = '', res = response)=> {
+    const isMongoId = ObjectId.isValid(term);
+
+    if (isMongoId) {
+        const category = await Category.findById(term);
+        return res.json({
+            results: ( category ? [category] : [] )
+        })
+    }
+
+    const regex = new RegExp(term, 'i');
+    const categories = await User.find({
+        $and: [{ name: regex },{ state: true }]
+    });
+
+    res.json({
+        results: categories
+    })
+
+}
+
 const search = (req = request, res = response) => {
 
     const {collection, term} = req.params;
@@ -47,7 +68,8 @@ const search = (req = request, res = response) => {
         case 'usuarios':
             searchUsers(term, res)
             break;
-        case 'categoria':
+        case 'categorias':
+            searchCategories(term, res)
             break;
         case 'productos':
             break;
