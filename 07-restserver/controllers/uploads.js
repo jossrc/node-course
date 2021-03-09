@@ -9,6 +9,17 @@ const uploadFiles = (req = request, res = response) => {
   }
 
   const { myFile } = req.files;
+  const cutFileName = myFile.name.toLowerCase().split('.');
+  const fileExtension = cutFileName[cutFileName.length - 1];
+
+  // Validar la extensión
+  const validFileExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+  if (!validFileExtensions.includes(fileExtension)) {
+    return res.status(400).json({
+      message: `La extensión ${fileExtension} no es permitida, ${validFileExtensions}`
+    })
+  }
+
   const uploadPath = path.join(__dirname, '../uploads', myFile.name);
 
   myFile.mv(uploadPath, (err) => {
