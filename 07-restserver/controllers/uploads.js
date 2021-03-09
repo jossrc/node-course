@@ -21,6 +21,17 @@ const uploadFiles = async (req = request, res = response) => {
   }
 };
 
+const updateImage = async (req = request, res = response) => {
+
+  const { id, collection } = req.params;
+
+  res.json({
+    id,
+    collection
+  })
+}
+
 module.exports = {
   uploadFiles,
+  updateImage
 };
