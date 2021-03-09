@@ -8,12 +8,17 @@ const uploadFiles = async (req = request, res = response) => {
     });
   }
 
-  const fileName = await uploadYourFile(req.files);
+  try {
+    // const fileName = await uploadYourFile(req.files, ['txt', 'md'], 'texts');
+    const fileName = await uploadYourFile(req.files, undefined, 'imgs');
 
-  res.json({
-    message: `El archivo ${fileName} se subió correctamente`,
-    fileName
-  })
+    res.json({
+      message: `El archivo ${fileName} se subió correctamente`,
+      fileName
+    })
+  } catch (message) {
+    res.status(400).json({message})
+  }
 
 };
 
