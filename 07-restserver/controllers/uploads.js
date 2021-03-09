@@ -97,14 +97,12 @@ const showImage = async (req = request, res = response) => {
   if (model.img) {
     const pathImage = path.join(__dirname, '../uploads', collection, model.img);
     if (fs.existsSync(pathImage)) {
-      return res.sendFile(pathImage)
+      return res.sendFile(pathImage);
     }
   }
 
-  res.json({
-    message: 'Falta placeholder',
-  });
-}
+  res.sendFile(path.join(__dirname, '../assets/no-image.jpg'));
+};
 
 module.exports = {
   uploadFiles,
