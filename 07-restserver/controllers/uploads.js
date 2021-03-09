@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { uploadYourFile  } = require('../helpers');
+const { uploadYourFile } = require('../helpers');
 
 const uploadFiles = async (req = request, res = response) => {
   if (!req.files || Object.keys(req.files).length === 0 || !req.files.myFile) {
@@ -14,12 +14,11 @@ const uploadFiles = async (req = request, res = response) => {
 
     res.json({
       message: `El archivo ${fileName} se subió correctamente`,
-      fileName
-    })
+      fileName,
+    });
   } catch (message) {
-    res.status(400).json({message})
+    res.status(400).json({ message });
   }
-
 };
 
 module.exports = {
