@@ -1,4 +1,5 @@
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const { request, response } = require('express');
 
 const uploadFiles = (req = request, res = response) => {
@@ -20,7 +21,9 @@ const uploadFiles = (req = request, res = response) => {
     })
   }
 
-  const uploadPath = path.join(__dirname, '../uploads', myFile.name);
+  const newUniqueFileName = `${uuidv4()}.${fileExtension}`;
+
+  const uploadPath = path.join(__dirname, '../uploads', newUniqueFileName);
 
   myFile.mv(uploadPath, (err) => {
     if (err) {
