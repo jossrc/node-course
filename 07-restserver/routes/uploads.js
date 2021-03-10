@@ -2,7 +2,7 @@ const { validateAllowedCollections } = require('../helpers');
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { uploadFiles, updateImage, showImage } = require('../controllers/uploads');
+const { uploadFiles, updateImageWithCloudinary, showImage } = require('../controllers/uploads');
 const { dataValidator, validateFileUpload } = require('../middlewares');
 
 const router = Router();
@@ -19,7 +19,7 @@ router.put(
     ),
     dataValidator,
   ],
-  updateImage
+    updateImageWithCloudinary
 );
 
 router.get('/:collection/:id', [
