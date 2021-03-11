@@ -15,6 +15,9 @@ class Server {
 
     // Rutas de mi aplicación
     this.routes();
+
+    // Sockets
+    this.sockets();
   }
 
   middlewares() {
@@ -27,6 +30,15 @@ class Server {
 
   routes() {
     // this.app.use( this.paths.auth, require('../routes/auth'));
+  }
+
+  sockets() {
+    this.io.on('connection', (socket) => {
+      console.log('Cliente conectado ', socket.id);
+      socket.on('disconnect', () => {
+        console.log('Cliente desconectado');
+      });
+    });
   }
 
   listen() {
