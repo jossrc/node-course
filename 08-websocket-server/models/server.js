@@ -40,10 +40,12 @@ class Server {
         console.log('Cliente desconectado', socket.id);
       });
 
-      socket.on('send-message', (payload) => {
-        this.io.emit('send-message', payload)
-      })
+      socket.on('send-message', (payload, callback) => {
+        const ID = 123456;
+        callback(ID);
 
+        // this.io.emit('send-message', payload)
+      });
     });
   }
 
