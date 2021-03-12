@@ -15,13 +15,13 @@
   </head>
 
   <body class="container">
-    <h1 class="mt-5">Escritorio</h1>
+    <h1 id="lblTituloEscritorio" class="mt-5">Escritorio</h1>
     <hr />
     <div class="row">
       <div class="col-8">
         <h4>Atendiendo a <small class="text-primary">....</small></h4>
 
-        <button class="btn btn-primary mt-5">Atender siguiente ticket</button>
+        <button id="btnAtenderTicket" class="btn btn-primary mt-5">Atender siguiente ticket</button>
       </div>
 
       <div class="col-4 text-center">
@@ -35,6 +35,7 @@
       </div>
     </div>
 
+    <script src="./socket.io/socket.io.js"></script>
     <script src="./js/escritorio.js"></script>
   </body>
 </html>
