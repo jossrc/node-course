@@ -3,7 +3,6 @@ const TicketControl = require('../models/ticket-control');
 const ticketControl = new TicketControl();
 
 const socketController = (socket) => {
-
   // Cuando un cliente se conecta
   socket.emit('ultimo-ticket', ticketControl.ultimo);
   socket.emit('estado-actual', ticketControl.ultimos4);
@@ -21,8 +20,8 @@ const socketController = (socket) => {
     if (!escritorio) {
       return callback({
         ok: false,
-        msg: 'El escritorio es obligatorio'
-      })
+        msg: 'El escritorio es obligatorio',
+      });
     }
 
     const ticket = ticketControl.atenderTicket(escritorio);
@@ -35,18 +34,15 @@ const socketController = (socket) => {
     if (!ticket) {
       callback({
         ok: false,
-        msg: 'Ya no hay tickets pendientes'
-      })
+        msg: 'Ya no hay tickets pendientes',
+      });
     } else {
       callback({
         ok: true,
-        ticket
-      })
+        ticket,
+      });
     }
-
-
-  })
-
+  });
 };
 
 module.exports = {
