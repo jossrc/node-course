@@ -7,15 +7,30 @@
       name="google-signin-client_id"
       content="877579681203-fqeamlufh75c76drkcl5von0t2g35bl3.apps.googleusercontent.com"
     />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>Google SignIn</title>
   </head>
-  <body>
-    <h1>Google SignIn</h1>
-    <hr />
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <body class="container">
+
+    <div class="row mt-5">
+      <div class="col-sm-6">
+        <h1>Google SignIn</h1>
+        <hr />
+        <br>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <br>
+        <a href="#" onclick="signOut();">Sign out</a>
+      </div>
+
+      <div class="col-sm-6">
+
+      </div>
+
+    </div>
+
+
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <a href="#" onclick="signOut();">Sign out</a>
 
     <script>
       var url = window.location.hostname.includes('localhost')
