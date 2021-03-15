@@ -3,6 +3,8 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const fileupload = require('express-fileupload');
+const { socketController } = require("../sockets/controller");
+const { createServer } = require('http');
 
 const { dbConnection } = require('../database/config');
 
@@ -10,6 +12,8 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.server = createServer(this.app);
+    this.io = require('socket.io')(this.server);
 
     this.paths = {
       auth : '/api/auth',
@@ -27,6 +31,9 @@ class Server {
     this.middlewares();
     // Rutas de mi aplicación
     this.routes();
+
+    // Sockets
+    this.sockets();
   }
 
   async connectionToDB() {
@@ -61,8 +68,12 @@ class Server {
     this.app.use(this.paths.uploads, require('../routes/uploads.js'));
   }
 
+  sockets() {
+    this.io.on('connection', socketController)
+  }
+
   listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(`Escuchando cambios en el port ${this.port}`);
     });
   }
