@@ -28,8 +28,9 @@ const checkJWT = async (token = '') => {
       return null;
     }
 
+    console.log('Check - generate-jwt ', jwt.verify(token, process.env.SECRETORPRIVATEKEY))
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-    console.log(uid)
+    console.log('generate-jwt UID:', uid)
     const user = await User.findById(uid);
 
     if (user) {

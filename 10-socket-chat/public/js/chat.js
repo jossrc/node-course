@@ -8,6 +8,7 @@ let socket = null;
 // Validar el token del localstorage
 const validateJWT = async () => {
   const token = localStorage.getItem('token') || '';
+  console.log('Chat Token UserID ',token);
   if (token.length <= 10) {
     window.location = 'index.html';
     throw new Error('No hay token en el servidor');
@@ -18,6 +19,7 @@ const validateJWT = async () => {
   });
 
   const { user: userDB, token: tokenDB } = await resp.json();
+  console.log({userDB, tokenDB})
   localStorage.setItem('token', tokenDB);
   user = userDB;
   document.title = user.name;

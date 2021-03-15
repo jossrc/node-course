@@ -32,6 +32,7 @@ const login = async (req = request, res = response) => {
 
     // Generar el JWT
     const token = await generateJWT(user.id);
+    console.log('Login - Auth controller :', token)
 
     res.json({
       user,
@@ -90,8 +91,10 @@ const googleSignIn = async (req = request, res = response) => {
 
 const renewAndValidateToken = async (req = request, res = response) => {
   const { authenticatedUser } = req;
-  // Renovar JWT (tiene uid por la respuesta (mod) del model )
-  const token = await generateJWT(authenticatedUser.uid);
+  console.log('renewAndValidateToken, Controller auth, ', authenticatedUser)
+  // Renovar JWT (tiene id - igual que _id)
+  const token = await generateJWT(authenticatedUser.id);
+  console.log('renewAndValidateToken, Token Controller AUth ', token)
 
   res.json({
     user: authenticatedUser,

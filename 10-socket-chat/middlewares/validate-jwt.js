@@ -13,6 +13,7 @@ const validateJWT = async (req = request, res = response, next) => {
 
   try {
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+    console.log('Uid', {uid})
     // Se envía el usuario autenticado por la request a nivel global
     const authenticatedUser = await User.findById(uid);
 
