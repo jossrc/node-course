@@ -90,7 +90,7 @@ const googleSignIn = async (req = request, res = response) => {
 
 const renewAndValidateToken = async (req = request, res = response) => {
   const { authenticatedUser } = req;
-  // Renovar JWT
+  // Renovar JWT (tiene uid por la respuesta (mod) del model )
   const token = await generateJWT(authenticatedUser.uid);
 
   res.json({
