@@ -21,13 +21,13 @@ myForm.addEventListener('submit', (e) => {
   })
     .then((resp) => resp.json())
     .then(({ message, token }) => {
-      console.log({message, token})
+      console.log({ message, token });
       if (!token) {
         return console.log(message);
       }
       localStorage.setItem('token', token);
-      console.log('LocalStorage: ', localStorage.getItem('token'))
-     window.location = 'chat.html';
+      console.log('LocalStorage: ', localStorage.getItem('token'));
+      window.location = 'chat.html';
     })
     .catch((err) => {
       console.log(err);
