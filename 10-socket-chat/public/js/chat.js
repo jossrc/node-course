@@ -53,8 +53,8 @@ const connectSocket = async () => {
 
   socket.on('active-users', showActiveUsers);
 
-  socket.on('private-message', () => {
-    //TODO:
+  socket.on('private-message', (payload) => {
+    console.log('Privado', payload)
   });
 
 }
