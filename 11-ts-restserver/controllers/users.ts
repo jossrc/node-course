@@ -85,11 +85,29 @@ export const putUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  res.json({
-    message: 'deleteUser',
-    id,
-  });
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: `No existe un usuario con el id ${id}`,
+      });
+    }
+
+    // await user.destroy();
+    await user.update({ state: false });
+
+    return res.json({
+      message: 'Usuario eliminado correctamente',
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Hable con el administrador',
+      error,
+    });
+  }
 };
