@@ -27,24 +27,62 @@ export const getUser = async (req: Request, res: Response) => {
   });
 };
 
-export const postUser = (req: Request, res: Response) => {
+export const postUser = async (req: Request, res: Response) => {
   const { body } = req;
 
-  res.json({
-    message: 'postUser',
-    body,
-  });
+  try {
+    const existsEmail = await User.findOne({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (existsEmail) {
+      return res.status(400).json({
+        message: `Ya existe un usuario con el email ${body.email}`,
+      });
+    }
+
+    const user = await User.create(body);
+
+    res.json({
+      message: 'Usuario creado correctamente',
+      user,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      error,
+    });
+  }
 };
 
-export const putUser = (req: Request, res: Response) => {
+export const putUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
 
-  res.json({
-    message: 'putUser',
-    body,
-    id,
-  });
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: `No existe un usuario con el id ${id}`,
+      });
+    }
+
+    await user.update(body);
+
+    res.json({
+      message: 'Usuario actualizado correctamente',
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Hable con el administrador',
+      error,
+    });
+  }
 };
 
 export const deleteUser = (req: Request, res: Response) => {
