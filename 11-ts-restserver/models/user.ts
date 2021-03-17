@@ -11,6 +11,8 @@ const User = db.define('User', {
   state: {
     type: DataTypes.BOOLEAN,
   },
+}, {
+  timestamps: false
 });
 
 export default User;
